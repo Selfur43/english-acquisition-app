@@ -1,0 +1,6 @@
+{
+  "version": "0.8.1+51",
+  "status": "NEEDS_WINDOWS_EVIDENCE",
+  "required_success_marker": "UPDATE SUCCESS - ALL V7 RELEASE GATES PASSED",
+  "final_auditor": "PENDING_TARGET_WINDOWS"
+}

@@ -1,0 +1,15 @@
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub/
+build/
+coverage/
+.idea/
+.vscode/
+*.iml
+windows/flutter/ephemeral/
+.env
+.env.*
+secrets.json
+*.log
