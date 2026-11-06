@@ -1,0 +1,7 @@
+﻿english_acquisition_app_current_sources_utf8.txt
+build/
+.dart_tool/
+windows/flutter/ephemeral/
+*.log
+*.backup_*
+release/*.zip
