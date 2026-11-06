@@ -1,3 +1,4 @@
+
 # 0.5.3+27 V7 Validation Candidate
 
 - Fixes Gate 2: the updater now formats staged sources first, then runs a second strict no-change verification.

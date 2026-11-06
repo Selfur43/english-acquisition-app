@@ -1,3 +1,4 @@
+
 $ErrorActionPreference = 'Stop'
 flutter pub get
 if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }

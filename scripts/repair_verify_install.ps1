@@ -1,3 +1,4 @@
+
 $ErrorActionPreference='Stop'
 Set-Location (Resolve-Path (Join-Path $PSScriptRoot '..'))
 Remove-Item '.\build\windows' -Recurse -Force -ErrorAction SilentlyContinue

@@ -1,3 +1,4 @@
+
 $ErrorActionPreference = 'Stop'
 function Invoke-NativeCommand {
   param([Parameter(Mandatory=$true)][string]$Executable,[Parameter(Mandatory=$true)][string[]]$ArgumentList)

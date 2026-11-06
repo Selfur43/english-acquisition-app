@@ -1,3 +1,4 @@
+
 # 0.6.1+31 Two-Profile PIN Security Repair
 
 - Replaces deprecated DropdownButtonFormField.value with initialValue.

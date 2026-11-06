@@ -1,3 +1,4 @@
+
 name: Flutter Windows CI
 
 on:
@@ -86,7 +87,7 @@ jobs:
 
           $file = Get-Item $exe
           Write-Host "Release executable: $($file.FullName)"
-          Write-Host "Size: $($file.Length) bytes"
+          Write-Host "Size: $($file.Length) bytes"x
           Write-Host "Created: $($file.LastWriteTime)"
 
       - name: Upload Windows release artifact

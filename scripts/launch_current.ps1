@@ -1,3 +1,4 @@
+
 $ErrorActionPreference = 'Stop'
 $projectRoot = Join-Path (Join-Path ([Environment]::GetFolderPath('Desktop')) 'Projects') 'english_acquisition_app_current'
 $exe = Join-Path $projectRoot 'build\windows\x64\runner\Release\english_acquisition_app.exe'

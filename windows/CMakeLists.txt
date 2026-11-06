@@ -1,3 +1,4 @@
+
 # Project-level configuration.
 cmake_minimum_required(VERSION 3.14)
 project(english_acquisition_app LANGUAGES CXX)

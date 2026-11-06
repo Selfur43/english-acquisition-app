@@ -1,3 +1,4 @@
+
 # 0.7.0+40 Startup Lock and Profile Switching
 
 Visible updates aligned with the supplied application screenshots:

@@ -1,0 +1,32 @@
+@echo off
+CHCP 65001 > NUL
+TITLE English Acquisition App Local Updater
+
+SET PROJECT_DIR=C:\Users\forma\Desktop\Projects\english_acquisition_app_current
+CD /D "%PROJECT_DIR%"
+
+echo ========================================================
+echo ENGLISH ACQUISITION APP - AUTOMATIC UPDATER & BUILD
+echo ========================================================
+
+IF NOT EXIST "patch.json" (
+    echo [HATA] patch.json dosyasi bulunamadi! Nemotron tarafindan uretilen patch.json dosyasini proje kokune koyun.
+    pause
+    exit /b 1
+)
+
+python update_project.py patch.json
+
+echo.
+echo ========================================================
+echo FLUTTER BAĞIMLILIKLARI VE TEST KONTROLU
+echo ========================================================
+call flutter pub get
+call flutter analyze
+call flutter test
+
+echo.
+echo ========================================================
+echo ISLEM COMPLETED!
+echo ========================================================
+pause

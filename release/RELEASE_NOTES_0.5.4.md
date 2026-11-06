@@ -1,3 +1,4 @@
+
 # 0.5.4+28 V7 Validation Candidate
 
 - Bundles an exact updater and exact update payload in one self-running package.

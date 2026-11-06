@@ -1,3 +1,4 @@
+
 $ErrorActionPreference = 'Stop'
 
 $packageRoot = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path

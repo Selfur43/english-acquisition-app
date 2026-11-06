@@ -1,3 +1,4 @@
+
 $ErrorActionPreference='Stop'
 $exe='.\build\windows\x64\runner\Release\english_acquisition_app.exe'
 if(-not(Test-Path $exe)){

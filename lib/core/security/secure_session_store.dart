@@ -1,24 +1,29 @@
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-
 abstract interface class SecureSessionStore {
   Future<void> clear();
   Future<String?> readUserId();
   Future<void> writeUserId(String userId);
 }
 
-final class FlutterSecureSessionStore implements SecureSessionStore {
-  const FlutterSecureSessionStore(this._storage);
-
-  static const _userIdKey = 'authenticated_user_id';
-  final FlutterSecureStorage _storage;
-
-  @override
-  Future<void> clear() => _storage.delete(key: _userIdKey);
-
-  @override
-  Future<String?> readUserId() => _storage.read(key: _userIdKey);
+/// Keeps the unlocked profile only in process memory.
+///
+/// The desktop app deliberately requires the PIN after every restart. Persisting
+/// the active profile in Windows secure storage added no security value and
+/// allowed a concurrent startup delete to race with a successful sign-in write.
+/// PIN credentials remain protected by the credential store; only the transient
+/// active-profile marker is kept here.
+final class VolatileSecureSessionStore implements SecureSessionStore {
+  String? _userId;
 
   @override
-  Future<void> writeUserId(String userId) =>
-      _storage.write(key: _userIdKey, value: userId);
+  Future<void> clear() async {
+    _userId = null;
+  }
+
+  @override
+  Future<String?> readUserId() async => _userId;
+
+  @override
+  Future<void> writeUserId(String userId) async {
+    _userId = userId;
+  }
 }

@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -18,29 +17,27 @@ final appRouterProvider = Provider<GoRouter>((ref) {
   final authentication = ref.watch(authenticationControllerProvider);
 
   return GoRouter(
-    initialLocation: '/home',
+    // V7 security policy requires an explicit PIN after every process start.
+    // Starting directly on the sign-in route also removes the possibility of
+    // an indefinite startup progress indicator.
+    initialLocation: '/sign-in',
     refreshListenable: authentication,
     redirect: (context, state) {
-      if (authentication.status == AuthenticationStatus.initializing) {
-        return state.matchedLocation == '/starting' ? null : '/starting';
-      }
-
       final isSigningIn = state.matchedLocation == '/sign-in';
-      if (authentication.status == AuthenticationStatus.unauthenticated) {
+      final isAuthenticated =
+          authentication.status == AuthenticationStatus.authenticated;
+
+      if (!isAuthenticated) {
         return isSigningIn ? null : '/sign-in';
       }
 
-      if (isSigningIn || state.matchedLocation == '/starting') {
+      if (isSigningIn) {
         return '/home';
       }
+
       return null;
     },
-    routes: [
-      GoRoute(
-        path: '/starting',
-        builder: (context, state) =>
-            const Scaffold(body: Center(child: CircularProgressIndicator())),
-      ),
+    routes: <RouteBase>[
       GoRoute(
         path: '/sign-in',
         builder: (context, state) => const SignInPage(),

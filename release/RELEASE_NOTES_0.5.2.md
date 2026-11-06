@@ -1,3 +1,4 @@
+
 # 0.5.2+26 V7 Validation Candidate
 
 - Fixes the locked-log failure by separating the PowerShell transcript log from the native-tool output log.

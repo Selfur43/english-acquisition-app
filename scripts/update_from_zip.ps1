@@ -1,3 +1,4 @@
+
 param([string]$UpdateZip)
 $ErrorActionPreference = 'Stop'
 Add-Type -AssemblyName System.Windows.Forms
@@ -6,9 +7,15 @@ if ([string]::IsNullOrWhiteSpace($UpdateZip)) {
   $dialog.Filter = 'Complete update ZIP (*.zip)|*.zip'
   $dialog.Title = 'Select English Acquisition App complete update'
   if ($dialog.ShowDialog() -ne [System.Windows.Forms.DialogResult]::OK) { return }
-  $UpdateZip = $UpdateZip
+  $UpdateZip = $dialog.FileName
 }
-$UpdateZip = (Resolve-Path $UpdateZip).Path
+if ([string]::IsNullOrWhiteSpace($UpdateZip)) {
+  throw 'No update ZIP was selected.'
+}
+if (-not (Test-Path -LiteralPath $UpdateZip -PathType Leaf)) {
+  throw "Update ZIP was not found: $UpdateZip"
+}
+$UpdateZip = (Resolve-Path -LiteralPath $UpdateZip).Path
 
 $projects = Join-Path ([Environment]::GetFolderPath('Desktop')) 'Projects'
 $current = Join-Path $projects 'english_acquisition_app_current'

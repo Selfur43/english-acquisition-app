@@ -13,7 +13,7 @@ export 'domain/value_objects/authentication_status.dart';
 export 'presentation/pages/sign_in_page.dart';
 
 final secureSessionStoreProvider = Provider<SecureSessionStore>(
-  (ref) => const FlutterSecureSessionStore(FlutterSecureStorage()),
+  (ref) => VolatileSecureSessionStore(),
 );
 
 final secureCredentialStoreProvider = Provider<SecureCredentialStore>(

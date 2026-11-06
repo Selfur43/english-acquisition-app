@@ -1,3 +1,4 @@
+
 $ErrorActionPreference='Stop'
 $projectRoot=(Resolve-Path (Join-Path $PSScriptRoot '..')).Path
 $exe=Join-Path $projectRoot 'build\windows\x64\runner\Release\english_acquisition_app.exe'

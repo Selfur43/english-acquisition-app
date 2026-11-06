@@ -1,4 +1,5 @@
-﻿$ErrorActionPreference = "Stop"
+
+$ErrorActionPreference = "Stop"
 
 $source = "C:\Users\forma\Desktop\Projects\english_acquisition_app_phase2_profile_goals"
 $staging = "C:\Users\forma\Desktop\Projects\english_acquisition_app_v0.2.1_phase2_verified_source"

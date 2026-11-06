@@ -1,3 +1,4 @@
+
 $ErrorActionPreference = 'Stop'
 if (-not (Test-Path '.\pubspec.yaml')) {
     throw "Run this script from the project root where pubspec.yaml exists. Current folder: $(Get-Location)"
