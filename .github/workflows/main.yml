@@ -1,0 +1,111 @@
+name: Flutter Windows CI
+
+on:
+  push:
+    branches:
+      - "**"
+  pull_request:
+    branches:
+      - main
+      - develop
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: flutter-windows-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality-and-windows-build:
+    name: Format, Analyze, Test, Windows Release
+    runs-on: windows-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.47.9"
+          channel: stable
+          cache: true
+
+      - name: Show tool versions
+        shell: pwsh
+        run: |
+          flutter --version
+          dart --version
+          git --version
+
+      - name: Enable Windows desktop
+        shell: pwsh
+        run: flutter config --enable-windows-desktop
+
+      - name: Resolve dependencies
+        shell: pwsh
+        run: flutter pub get
+
+      - name: Verify formatting
+        shell: pwsh
+        run: |
+          dart format --output=none --set-exit-if-changed lib test tool
+
+      - name: Run V7 release audit
+        shell: pwsh
+        run: |
+          if (Test-Path ".\tool\v7_release_audit.dart") {
+            dart run .\tool\v7_release_audit.dart
+          } else {
+            Write-Host "V7 audit file is not present in this branch."
+          }
+
+      - name: Analyze project
+        shell: pwsh
+        run: flutter analyze
+
+      - name: Run automated tests
+        shell: pwsh
+        run: flutter test --reporter expanded
+
+      - name: Build Windows release
+        shell: pwsh
+        run: flutter build windows --release
+
+      - name: Verify Windows executable
+        shell: pwsh
+        run: |
+          $exe = ".\build\windows\x64\runner\Release\english_acquisition_app.exe"
+
+          if (-not (Test-Path $exe)) {
+            throw "Windows Release executable was not created: $exe"
+          }
+
+          $file = Get-Item $exe
+          Write-Host "Release executable: $($file.FullName)"
+          Write-Host "Size: $($file.Length) bytes"
+          Write-Host "Created: $($file.LastWriteTime)"
+
+      - name: Upload Windows release artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: english-acquisition-app-windows-${{ github.sha }}
+          path: build/windows/x64/runner/Release/**
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Upload test and diagnostics files
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: english-acquisition-app-evidence-${{ github.sha }}
+          path: |
+            pubspec.yaml
+            pubspec.lock
+            analysis_options.yaml
+            release/**
+          if-no-files-found: warn
+          retention-days: 14
