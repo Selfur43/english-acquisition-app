@@ -1,7 +1,9 @@
-﻿english_acquisition_app_current_sources_utf8.txt
+﻿*.backup_*
+*.log
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
 AI_English_Reflex_Coach_Copilot_Master_Prompt_TR_v7_TWO_USER_WINDOWS_PERSONAL.txt
 build/
-.dart_tool/
+english_acquisition_app_current_sources_utf8.txt
 windows/flutter/ephemeral/
-*.log
-*.backup_*
